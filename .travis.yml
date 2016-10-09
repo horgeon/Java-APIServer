@@ -1,0 +1,26 @@
+language: java
+
+sudo: false
+
+jdk:
+  - oraclejdk8
+
+env:
+  - secure: "yhLDD/PUDmbIj5LSReyk5cW8hhrQ2Nm65OwOP1AbOWO13akAkfOnj0WSL1nxIJJKyIVlp/ULTlhKvDvA58Kwl9UgSFaaXxrKqUlOJJyeyUjIc7iq/4ssy+HSG2Kh7PGu1MBTbNYSwBgU9NZYgCiazYTGSpfFQxo1EaNGClwBeKh5pSbLyjI2LUzGcnEx/wxKRYwnMMwW+NSVZL8dmxsqcxIULhh26ZFFCjxczEuBfLQuaoz1VE9skqGRoinBiUFru394CNsHTAKwPpffkpsotKTN6raS2FCfiJkAdMmEYFj8HlO2y5rAOs/tYsTTYyTcP8aBpVh4ERBSKbSvyhMGArAqG+S5rPfiNVJzGAaX2qQZGUSdNMcusdykLzoZE5GGd3TGT6tRF0eHYgTuZw6AJXzn6FFkc4xZux0mjLu/W5KpKv/gzAzm+rQC0ViH+p8jjvwucSsmevCSFiIiHF6A+BsiaUXksfHBOT3IouH1SZgBKZCfLXjmZ+zNofY2ekahq2K7kg7jTFLZ+6/OI8mALWiCdfx7cAsDW69asCept6dOzQr8YlGD2rKmpouM0jnUrMp90OL6M5z0cdJ7xNm2zWri8ifyvmjomuuKBA2nO28OTLg1tGLnP5CpD7kf/POk3NG9QqSXeeOqVy/qpTpCltvI4CONJRKYR6hQ0otkZek="
+
+cache:
+ directories:
+   - $HOME/.m2
+
+before_install:
+  - export MAVEN_SKIP_RC=true
+  - mvn -Xmx32M -v | grep 1.7.0; if [ $? = 0 ]; then export MAVEN_OPTS="-XX:MaxPermSize=240M"; else export MAVEN_OPTS="-XX:MaxMetaspaceSize=240M -XX:CompressedClassSpaceSize=240M"; fi
+  - export MAVEN_OPTS="-Xmx512M $MAVEN_OPTS"
+
+script:
+  - mvn
+
+after_success:
+  - echo '<?xml version="1.0" encoding="UTF-8"?><settings xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.1.0 http://maven.apache.org/xsd/settings-1.1.0.xsd" xmlns="http://maven.apache.org/SETTINGS/1.1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><servers><server><username>ci</username><password>${env.CI_PASSWD}</password><id>horgeon-repo</id></server></servers></settings>' > settings.xml
+  - mvn -s settings.xml deploy
+  - rm settings.xml
