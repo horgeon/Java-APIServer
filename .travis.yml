@@ -29,6 +29,6 @@ deploy:
   provider: releases
   api_key:
     secure: T1YbfHmIVS6gSPvYkgCJIV97uOfjE6Ga9MMYAs5OggjcTotcGr49gTOAuuSXtB+8U+ubP9L+hXMlKdIAf0EfNQhzzhAEltLqirzZ53GKpFEa6n0OdnQTR7kyk2xc1R6TcrI/fGk1bcgHC2Z6McysOIeUQilYqrP3h/U71YR3zXdGNfK4mUGX+BY8ddW3eISjIrqJVa/6vyDcpWfZhtn2RdCI0F4cr2vI0FcC+cN4CNgOEVlEx9tFC6hbu3fkLxRvzQNynJlrOksPNdHdFtvsQLUEx2DzzqyBbMAAMVfekyMQDQaxZhzOW4a351DvbXax5j0Av4fk/YXjyHF6OcxieNBgacGJVGJ5n5ggF4xzvSvljiZ5qqYfnPUltgnH33N7ZfMaFreuRexFZlIovMdstPQN2HCzHXzsEd/Wk1SUZwC6SounZuADZkFM7LA0SoqN7mLjJxVzxmQcBxKQj1WsojJNN4qHZbJxFbo61NGnXZv1DDzvYG9rrdLH7cowFmz9HgIyS9olHT/UtSe3eVEtZ6sZQlZ92mIHERgFpHmIslC03BWiafwQBrl7WyVRoqlvYBHHC8hPrbxnMIx68/pra0YFmcOtV2f2BdB6TZ8gIAYXDBFfS2OH+6X6z5noS32Dp5ahLwS+fkJKmU5hRaLaF9TKivGpn7qivFBglZLh84o=
-  file: "${TRAVIS_BUILD_DIR}/target/APIServer-1.0.jar"
+  file: "${TRAVIS_BUILD_DIR}/target/APIServer.jar"
   on:
     tags: true
