@@ -6,6 +6,7 @@ import java.net.InetSocketAddress;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class HTTPServer {
 	private HttpServer server;
@@ -52,16 +53,17 @@ public class HTTPServer {
 	public void start() throws Exception {
 		this.threadPool = Executors.newFixedThreadPool( 1 );
 		this.server.setExecutor( this.threadPool );
+
 		this.server.start();
+
 		this.started = true;
 	}
 
 	public void stop() throws Exception {
 		this.server.stop( 1 );
 
-		this.threadPool.shutdownNow();
-
-		Thread.sleep( 5000 );
+		this.threadPool.shutdown();
+		this.threadPool.awaitTermination( 60, TimeUnit.SECONDS );
 
 		this.started = false;
 	}
