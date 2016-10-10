@@ -64,4 +64,9 @@ public class HTTPServer {
 
 		this.threadPool.shutdownNow();
 	}
+
+	public void restart() throws Exception {
+		this.server.stop( 1 );
+		this.server.start();
+	}
 }
