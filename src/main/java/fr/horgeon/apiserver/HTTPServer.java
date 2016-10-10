@@ -1,5 +1,6 @@
 package fr.horgeon.apiserver;
 
+import com.sun.net.httpserver.HttpContext;
 import com.sun.net.httpserver.HttpServer;
 
 import java.net.InetSocketAddress;
@@ -35,10 +36,13 @@ public class HTTPServer {
 	}
 
 	public void unregisterHandler( String path ) {
-		if( this.server != null )
-			this.server.removeContext( this.handlers.getContext( path ) );
+		HttpContext context = this.handlers.getContext( path );
+		if( context != null ) {
+			if( this.server != null )
+				this.server.removeContext( context );
 
-		this.handlers.unregisterContext( path );
+			this.handlers.unregisterContext( path );
+		}
 		this.handlers.unregister( path );
 	}
 
