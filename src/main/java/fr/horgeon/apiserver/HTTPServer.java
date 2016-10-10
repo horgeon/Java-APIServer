@@ -3,6 +3,7 @@ package fr.horgeon.apiserver;
 import com.sun.net.httpserver.HttpServer;
 
 import java.net.InetSocketAddress;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -69,7 +70,8 @@ public class HTTPServer {
 	}
 
 	public void fullStop() throws Exception {
-		for( Map.Entry<String, HTTPHandler> entry : handlers.entries() ) {
+		for( Iterator<Map.Entry<String, HTTPHandler>> iterator = handlers.entries().iterator(); iterator.hasNext(); ) {
+			Map.Entry<String, HTTPHandler> entry = iterator.next();
 			this.unregisterHandler( entry.getKey() );
 		}
 
