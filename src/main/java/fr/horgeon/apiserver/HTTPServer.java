@@ -50,11 +50,11 @@ public class HTTPServer {
 	}
 
 	public void start() throws Exception {
+		this.server = HttpServer.create( new InetSocketAddress( port ), 0 );
+
 		for( Map.Entry<String, HTTPHandler> entry: handlers.entries() ) {
 			this.handlers.registerContext( entry.getKey(), this.server.createContext( entry.getKey(), entry.getValue() ) );
 		}
-
-		this.server = HttpServer.create( new InetSocketAddress( port ), 0 );
 
 		this.threadPool = Executors.newFixedThreadPool( 1 );
 		this.server.setExecutor( this.threadPool );
