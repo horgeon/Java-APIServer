@@ -25,8 +25,6 @@ public class HTTPServer {
 
 		this.server = HttpServer.create( new InetSocketAddress( port ), 0 );
 
-		this.threadPool = Executors.newFixedThreadPool( 1 );
-
 		this.handlers = new HTTPHandlers();
 	}
 
@@ -51,22 +49,27 @@ public class HTTPServer {
 	}
 
 	public void start() throws Exception {
+		this.threadPool = Executors.newFixedThreadPool( 1 );
 		this.server.setExecutor( this.threadPool );
 		this.server.start();
 	}
 
 	public void stop() throws Exception {
-		for( Map.Entry<String, HTTPHandler> entry : handlers.entries() ) {
-			this.unregisterHandler( entry.getKey() );
-		}
-
 		this.server.stop( 1 );
 
 		this.threadPool.shutdownNow();
 	}
 
+	public void fullStop() throws Exception {
+		for( Map.Entry<String, HTTPHandler> entry : handlers.entries() ) {
+			this.unregisterHandler( entry.getKey() );
+		}
+
+		this.stop();
+	}
+
 	public void restart() throws Exception {
-		this.server.stop( 1 );
-		this.server.start();
+		this.stop();
+		this.start();
 	}
 }
