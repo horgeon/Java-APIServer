@@ -26,19 +26,17 @@ public class HTTPServer {
 
 		this.port = port;
 
-		this.server = HttpServer.create( new InetSocketAddress( port ), 0 );
-
 		this.handlers = new HTTPHandlers();
 	}
 
 	public void registerHandler( String path, HTTPHandler handler ) {
 		this.handlers.register( path, handler );
-		this.handlers.registerContext( path, this.server.createContext( path, handler ) );
 	}
 
 	public void unregisterHandler( String path ) {
 		if( this.server != null )
 			this.server.removeContext( this.handlers.getContext( path ) );
+
 		this.handlers.unregisterContext( path );
 		this.handlers.unregister( path );
 	}
@@ -52,6 +50,12 @@ public class HTTPServer {
 	}
 
 	public void start() throws Exception {
+		for( Map.Entry<String, HTTPHandler> entry: handlers.entries() ) {
+			this.handlers.registerContext( entry.getKey(), this.server.createContext( entry.getKey(), entry.getValue() ) );
+		}
+
+		this.server = HttpServer.create( new InetSocketAddress( port ), 0 );
+
 		this.threadPool = Executors.newFixedThreadPool( 1 );
 		this.server.setExecutor( this.threadPool );
 
@@ -66,21 +70,16 @@ public class HTTPServer {
 		this.threadPool.shutdown();
 		this.threadPool.awaitTermination( 60, TimeUnit.SECONDS );
 
-		this.started = false;
-	}
-
-	public void fullStop() throws Exception {
-		for( Iterator<Map.Entry<String, HTTPHandler>> iterator = handlers.entries().iterator(); iterator.hasNext(); ) {
-			Map.Entry<String, HTTPHandler> entry = iterator.next();
-
+		for( Map.Entry<String, HTTPHandler> entry: handlers.entries() ) {
 			if( this.server != null )
 				this.server.removeContext( this.handlers.getContext( entry.getKey() ) );
+
 			this.handlers.unregisterContext( entry.getKey() );
 		}
 
-		this.handlers.clear();
+		this.server = null;
 
-		this.stop();
+		this.started = false;
 	}
 
 	public void restart() throws Exception {
