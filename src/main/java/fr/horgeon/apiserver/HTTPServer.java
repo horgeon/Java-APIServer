@@ -13,6 +13,7 @@ public class HTTPServer {
 	private HttpServer server;
 	private HTTPHandlers handlers;
 	private ExecutorService threadPool;
+	private Map<String, String> keys;
 	private boolean started = false;
 
 	public Integer port;
@@ -44,15 +45,14 @@ public class HTTPServer {
 	public void setKeys( Map<String, String> keys ) {
 		System.out.println( "WARNING: Public and private keys changed!" );
 
-		for( Map.Entry<String, HTTPHandler> entry : handlers.entries() ) {
-			entry.getValue().setKeys( keys );
-		}
+		this.keys = keys;
 	}
 
 	public void start() throws Exception {
 		this.server = HttpServer.create( new InetSocketAddress( port ), 0 );
 
 		for( Map.Entry<String, HTTPHandler> entry: handlers.entries() ) {
+			entry.getValue().setKeys( this.keys );
 			this.handlers.registerContext( entry.getKey(), this.server.createContext( entry.getKey(), entry.getValue() ) );
 		}
 
