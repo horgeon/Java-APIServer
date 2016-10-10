@@ -72,8 +72,13 @@ public class HTTPServer {
 	public void fullStop() throws Exception {
 		for( Iterator<Map.Entry<String, HTTPHandler>> iterator = handlers.entries().iterator(); iterator.hasNext(); ) {
 			Map.Entry<String, HTTPHandler> entry = iterator.next();
-			this.unregisterHandler( entry.getKey() );
+
+			if( this.server != null )
+				this.server.removeContext( this.handlers.getContext( entry.getKey() ) );
+			this.handlers.unregisterContext( entry.getKey() );
 		}
+
+		this.handlers.clear();
 
 		this.stop();
 	}

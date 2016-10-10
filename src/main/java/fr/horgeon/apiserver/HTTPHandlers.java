@@ -26,6 +26,10 @@ public class HTTPHandlers {
 		this.list.remove( path );
 	}
 
+	public void clear() {
+		this.list.clear();
+	}
+
 	public void registerContext( String path, HttpContext context ) {
 		this.contexts.put( path, context );
 	}
