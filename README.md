@@ -1,4 +1,4 @@
-# Horgeon Java APIServer
+# Horgeon Java APIServer [![Build Status](https://travis-ci.org/horgeon/ProdriversAPI.svg?branch=master)](https://travis-ci.org/horgeon/ProdriversAPI)
 
 Simple Java HTTP API server with authentication, designed for lightweight applications.
 
