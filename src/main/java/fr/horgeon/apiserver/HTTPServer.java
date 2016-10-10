@@ -61,6 +61,8 @@ public class HTTPServer {
 
 		this.threadPool.shutdownNow();
 
+		Thread.sleep( 5000 );
+
 		this.started = false;
 	}
 
