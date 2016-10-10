@@ -11,6 +11,7 @@ public class HTTPServer {
 	private HttpServer server;
 	private HTTPHandlers handlers;
 	private ExecutorService threadPool;
+	private boolean started = false;
 
 	public Integer port;
 
@@ -52,12 +53,15 @@ public class HTTPServer {
 		this.threadPool = Executors.newFixedThreadPool( 1 );
 		this.server.setExecutor( this.threadPool );
 		this.server.start();
+		this.started = true;
 	}
 
 	public void stop() throws Exception {
 		this.server.stop( 1 );
 
 		this.threadPool.shutdownNow();
+
+		this.started = false;
 	}
 
 	public void fullStop() throws Exception {
@@ -71,5 +75,9 @@ public class HTTPServer {
 	public void restart() throws Exception {
 		this.stop();
 		this.start();
+	}
+
+	public boolean isStarted() {
+		return this.started;
 	}
 }
