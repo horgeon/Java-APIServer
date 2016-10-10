@@ -53,6 +53,17 @@
 		<finalName>${project.artifactId}-${project.version}</finalName>
 		<defaultGoal>clean package</defaultGoal>
 
+		<resources>
+			<resource>
+				<targetPath>.</targetPath>
+				<directory>${basedir}</directory>
+				<includes>
+					<include>README.md</include>
+					<include>LICENSE.md</include>
+				</includes>
+			</resource>
+		</resources>
+
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -74,12 +85,8 @@
 			</plugin>
 
 			<plugin>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<configuration>
-					<descriptorRefs>
-						<descriptorRef>jar-with-dependencies</descriptorRef>
-					</descriptorRefs>
-				</configuration>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
 			</plugin>
 
 			<plugin>
