@@ -32,7 +32,14 @@ public class HTTPServer {
 
 	public void registerHandler( String path, HTTPHandler handler ) {
 		this.handlers.register( path, handler );
-		this.server.createContext( path, handler );
+		this.handlers.registerContext( path, this.server.createContext( path, handler ) );
+	}
+
+	public void unregisterHandler( String path ) {
+		if( this.server != null )
+			this.server.removeContext( this.handlers.getContext( path ) );
+		this.handlers.unregisterContext( path );
+		this.handlers.unregister( path );
 	}
 
 	public void setKeys( Map<String, String> keys ) {
@@ -49,11 +56,11 @@ public class HTTPServer {
 	}
 
 	public void stop() throws Exception {
-		this.server.stop( 1 );
-
 		for( Map.Entry<String, HTTPHandler> entry : handlers.entries() ) {
-			this.server.removeContext( entry.getKey() );
+			this.unregisterHandler( entry.getKey() );
 		}
+
+		this.server.stop( 1 );
 
 		this.threadPool.shutdownNow();
 	}
