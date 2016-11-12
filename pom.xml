@@ -94,12 +94,12 @@
 		<repository>
 			<id>horgeon-repo</id>
 			<name>horgeon-repo-releases</name>
-			<url>https://repo.horgeon.fr/artifactory/maven-release</url>
+			<url>https://repo.horgeon.fr/repository/maven-releases/</url>
 		</repository>
 		<snapshotRepository>
 			<id>horgeon-repo</id>
 			<name>horgeon-repo-snapshots</name>
-			<url>https://repo.horgeon.fr/artifactory/maven-snapshot</url>
+			<url>https://repo.horgeon.fr/repository/maven-snapshots/</url>
 		</snapshotRepository>
 	</distributionManagement>
 </project>
