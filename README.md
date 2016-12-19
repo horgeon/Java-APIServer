@@ -1,4 +1,4 @@
-# Horgeon Java APIServer [![Build Status](https://travis-ci.org/horgeon/ProdriversAPI.svg?branch=master)](https://travis-ci.org/horgeon/ProdriversAPI)
+# Horgeon Java APIServer [![Build Status](https://travis-ci.org/horgeon/Java-APIServer.svg?branch=master)](https://travis-ci.org/horgeon/Java-APIServer)
 
 Simple Java HTTP API server with authentication, designed for lightweight applications.
 
@@ -7,4 +7,4 @@ Simple Java HTTP API server with authentication, designed for lightweight applic
  - Use Oracle JRE's built-in HTTP server
  - Currently single-threaded
 
-See [Communication example](https://github.com/horgeon/java-apiserver/wiki/Communication-example) and [Implementation example](https://github.com/horgeon/java-apiserver/wiki/Implementation-example) for usage examples.
+See [Communication example](https://github.com/horgeon/Java-APIServer/wiki/Communication-example) and [Implementation example](https://github.com/horgeon/Java-APIServer/wiki/Implementation-example) for usage examples.
